@@ -20,12 +20,12 @@ class Map
     #[ORM\Column]
     private ?int $gameId = null;
 
-    #[ORM\OneToMany(targetEntity: Walkable::class, mappedBy: 'map')]
-    private Collection $walkables;
+    #[ORM\OneToMany(targetEntity: WalkablePoint::class, mappedBy: 'map')]
+    private Collection $walkablePoints;
 
     public function __construct()
     {
-        $this->walkables = new ArrayCollection();
+        $this->walkablePoints = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,26 +46,26 @@ class Map
     }
 
     /**
-     * @return Collection<int, Walkable>
+     * @return Collection<int, WalkablePoint>
      */
-    public function getWalkables(): Collection
+    public function getWalkablePoints(): Collection
     {
-        return $this->walkables;
+        return $this->walkablePoints;
     }
 
-    public function addWalkable(Walkable $walkable): static
+    public function addWalkable(WalkablePoint $walkable): static
     {
-        if (!$this->walkables->contains($walkable)) {
-            $this->walkables->add($walkable);
+        if (!$this->walkablePoints->contains($walkable)) {
+            $this->walkablePoints->add($walkable);
             $walkable->setMap($this);
         }
 
         return $this;
     }
 
-    public function removeWalkable(Walkable $walkable): static
+    public function removeWalkable(WalkablePoint $walkable): static
     {
-        if ($this->walkables->removeElement($walkable)) {
+        if ($this->walkablePoints->removeElement($walkable)) {
             // set the owning side to null (unless already changed)
             if ($walkable->getMap() === $this) {
                 $walkable->setMap(null);

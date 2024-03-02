@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WalkableRepository::class)]
 #[ApiResource]
-class Walkable
+class WalkablePoint
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

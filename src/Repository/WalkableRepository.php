@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\Walkable;
+use App\Entity\WalkablePoint;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Walkable>
+ * @extends ServiceEntityRepository<WalkablePoint>
  *
- * @method Walkable|null find($id, $lockMode = null, $lockVersion = null)
- * @method Walkable|null findOneBy(array $criteria, array $orderBy = null)
- * @method Walkable[]    findAll()
- * @method Walkable[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method WalkablePoint|null find($id, $lockMode = null, $lockVersion = null)
+ * @method WalkablePoint|null findOneBy(array $criteria, array $orderBy = null)
+ * @method WalkablePoint[]    findAll()
+ * @method WalkablePoint[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class WalkableRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Walkable::class);
+        parent::__construct($registry, WalkablePoint::class);
     }
 
 //    /**
