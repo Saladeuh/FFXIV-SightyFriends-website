@@ -23,9 +23,13 @@ class Map
     #[ORM\OneToMany(targetEntity: WalkablePoint::class, mappedBy: 'map')]
     private Collection $walkablePoints;
 
+    #[ORM\OneToMany(targetEntity: WalkableSegment::class, mappedBy: 'map')]
+    private Collection $walkableSegments;
+
     public function __construct()
     {
         $this->walkablePoints = new ArrayCollection();
+        $this->walkableSegments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,6 +73,36 @@ class Map
             // set the owning side to null (unless already changed)
             if ($walkable->getMap() === $this) {
                 $walkable->setMap(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WalkableSegment>
+     */
+    public function getWalkableSegments(): Collection
+    {
+        return $this->walkableSegments;
+    }
+
+    public function addWalkableSegment(WalkableSegment $walkableSegment): static
+    {
+        if (!$this->walkableSegments->contains($walkableSegment)) {
+            $this->walkableSegments->add($walkableSegment);
+            $walkableSegment->setMap($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWalkableSegment(WalkableSegment $walkableSegment): static
+    {
+        if ($this->walkableSegments->removeElement($walkableSegment)) {
+            // set the owning side to null (unless already changed)
+            if ($walkableSegment->getMap() === $this) {
+                $walkableSegment->setMap(null);
             }
         }
 
