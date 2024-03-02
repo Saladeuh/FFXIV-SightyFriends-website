@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\WalkableSegmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WalkableSegmentRepository::class)]
+#[ApiResource]
 class WalkableSegment
 {
     #[ORM\Id]
