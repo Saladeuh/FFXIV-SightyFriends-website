@@ -7,7 +7,7 @@ use App\Repository\WalkableRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WalkableRepository::class)]
-#[ApiResource]
+#[ApiResource()]
 class WalkablePoint
 {
     #[ORM\Id]

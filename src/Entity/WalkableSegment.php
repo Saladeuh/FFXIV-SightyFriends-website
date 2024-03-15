@@ -3,11 +3,18 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use App\Repository\WalkableSegmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WalkableSegmentRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    uriTemplate: '/maps/{mapId}/WalkableSegments',
+    uriVariables: ['mapId' => new Link(fromClass: Map::class, toProperty: 'map')],
+    operations: [new GetCollection()]
+)
+]
 class WalkableSegment
 {
     #[ORM\Id]
