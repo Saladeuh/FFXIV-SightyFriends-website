@@ -26,6 +26,9 @@ class Map
     #[ORM\OneToMany(targetEntity: WalkableSegment::class, mappedBy: 'map')]
     private Collection $walkableSegments;
 
+    #[ORM\Column(length: 255)]
+    private ?string $placeName = null;
+
     public function __construct()
     {
         $this->walkablePoints = new ArrayCollection();
@@ -105,6 +108,18 @@ class Map
                 $walkableSegment->setMap(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlaceName(): ?string
+    {
+        return $this->placeName;
+    }
+
+    public function setPlaceName(string $placeName): static
+    {
+        $this->placeName = $placeName;
 
         return $this;
     }
