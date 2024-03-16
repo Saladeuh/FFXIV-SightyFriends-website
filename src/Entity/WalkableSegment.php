@@ -5,14 +5,18 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Post;
 use App\Repository\WalkableSegmentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: WalkableSegmentRepository::class)]
 #[ApiResource(
     uriTemplate: '/maps/{mapId}/WalkableSegments',
-    uriVariables: ['mapId' => new Link(fromClass: Map::class, toProperty: 'map')],
-    operations: [new GetCollection()]
+    uriVariables: ['mapId' => new Link(fromClass: WalkableSegment::class, toProperty: 'map')],
+    operations: [
+        new GetCollection(),
+    ]
 )
 ]
 class WalkableSegment
@@ -40,7 +44,7 @@ class WalkableSegment
     #[ORM\Column]
     private ?int $z2 = null;
 
-    #[ORM\ManyToOne(inversedBy: 'walkableSegments')]
+    #[ORM\ManyToOne(inversedBy: 'walkableSegments', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Map $map = null;
 
