@@ -18,12 +18,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 class Map
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'NONE')]
     private ?int $id = null;
-
-    #[ORM\Column]
-    private ?int $gameId = null;
 
     #[ORM\OneToMany(targetEntity: WalkablePoint::class, mappedBy: 'map')]
     private Collection $walkablePoints;
@@ -45,15 +42,9 @@ class Map
         return $this->id;
     }
 
-    public function getGameId(): ?int
+    public function setId(int $id): static
     {
-        return $this->gameId;
-    }
-
-    public function setGameId(int $gameId): static
-    {
-        $this->gameId = $gameId;
-
+        $this->id=$id;
         return $this;
     }
 

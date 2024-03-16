@@ -36,11 +36,12 @@ class ImportMapCommand extends Command
             fclose($handleMaps);
             fclose($handleNames);
             foreach ($maps as $map) {
+                $mapId=$map[0];
                 $nameId = $map[13];
-                if (is_numeric($nameId)) {
+                if (is_numeric($nameId) && is_numeric($mapId)) {
                     $placeName = $names[$nameId][1];
                     $io->writeln($placeName);
-                    $mapEntity = (new Map())->setGameId((int) $map[0])->setPlaceName($placeName);
+                    $mapEntity = (new Map())->setId((int)$mapId)->setPlaceName($placeName);
                     $this->entityManager->persist($mapEntity);
                 }
             }
