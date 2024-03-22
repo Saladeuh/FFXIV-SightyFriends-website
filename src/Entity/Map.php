@@ -4,9 +4,6 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Repository\MapRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,21 +11,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: MapRepository::class)]
-#[ApiResource(operations: [new GetCollection()])]
+#[ApiResource(operations: [new GetCollection()],
+    normalizationContext: ['groups' => ['read']])]
 class Map
 {
     #[ORM\Id]
     #[ORM\Column]
     #[ORM\GeneratedValue(strategy: 'NONE')]
+    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\OneToMany(targetEntity: WalkablePoint::class, mappedBy: 'map')]
     private Collection $walkablePoints;
 
     #[ORM\OneToMany(targetEntity: WalkableSegment::class, mappedBy: 'map')]
+    #[Groups(['read'])]
     private Collection $walkableSegments;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $placeName = null;
 
     public function __construct()
@@ -44,7 +45,8 @@ class Map
 
     public function setId(int $id): static
     {
-        $this->id=$id;
+        $this->id = $id;
+
         return $this;
     }
 
