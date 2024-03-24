@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Post;
 use App\Repository\WalkableSegmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -12,13 +13,15 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: WalkableSegmentRepository::class)]
 #[ApiResource(
     uriTemplate: '/maps/{mapId}/WalkableSegments',
-    uriVariables: ['mapId' => new Link(fromClass: WalkableSegment::class, toProperty: 'map')],
+    uriVariables: ['mapId' => new Link(fromClass: Map::class, fromProperty: 'walkableSegments')],
     operations: [
         new GetCollection(),
     ],
     normalizationContext: ['groups' => ['read']]
-)
-]
+)]
+#[ApiResource(
+    operations: [new Post()]
+)]
 class WalkableSegment
 {
     #[ORM\Id]

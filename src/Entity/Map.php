@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\MapRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: MapRepository::class)]
-#[ApiResource(operations: [new GetCollection()],
+#[ApiResource(operations: [new Get(), new GetCollection()],
     normalizationContext: ['groups' => ['read']])]
 class Map
 {
@@ -83,9 +84,9 @@ class Map
     /**
      * @return Collection<int, WalkableSegment>
      */
-    public function getWalkableSegments(): Collection
+    public function getWalkableSegments(): array
     {
-        return $this->walkableSegments;
+        return $this->walkableSegments->getValues();
     }
 
     public function addWalkableSegment(WalkableSegment $walkableSegment): static
